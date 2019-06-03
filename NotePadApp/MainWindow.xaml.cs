@@ -21,12 +21,15 @@ namespace NotePadApp
     public partial class MainWindow : Window
     {
         private string _saveUri;
+        private Timer timer;
 
         public MainWindow()
         {
             InitializeComponent();
 
-            Timer timer = new Timer(SaveFile, _saveUri, TimeSpan.FromMinutes(0), TimeSpan.FromMinutes(1));
+            _saveUri = "NewFile_" + Guid.NewGuid().ToString() + ".txt";
+
+            timer = new Timer(SaveFile, _saveUri, TimeSpan.FromSeconds(30), TimeSpan.FromSeconds(60));
 
         }
 
@@ -42,7 +45,7 @@ namespace NotePadApp
                 {
                     SaveFile(_saveUri);
                 }
-                
+
             }
             richTextBox.Document.Blocks.Clear();
         }
@@ -70,7 +73,14 @@ namespace NotePadApp
         {
             try
             {
+                if (!File.Exists((string)path))
+                {
+                    File.Create((string)path);
+                }
+
                 string text = new TextRange(richTextBox.Document.ContentStart, richTextBox.Document.ContentEnd).Text;
+
+                if (text.Length <= 0 || text == "\r\n") return;
 
                 using (StreamWriter writer = new StreamWriter((string)path))
                 {
@@ -97,6 +107,8 @@ namespace NotePadApp
             if (result == true)
             {
                 _saveUri = openDialog.FileName;
+                timer = null;
+                timer = new Timer(SaveFile, _saveUri, TimeSpan.FromSeconds(0), TimeSpan.FromSeconds(30));
             }
 
             SaveFile(_saveUri);
