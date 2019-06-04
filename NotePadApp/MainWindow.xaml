@@ -20,7 +20,7 @@
                 <MenuItem x:Name="saveAsMenuItem" Click="SaveAsMenuItemClick" Header="Сохранить как" Height="25"></MenuItem>
                 <Separator></Separator>
                 <MenuItem Header="Параметры страницы..." Height="25"></MenuItem>
-                <MenuItem Header="Печать..." Height="25"></MenuItem>
+                <MenuItem x:Name="printMenuItem" Click="PrintMenuItemClick" Header="Печать..." Height="25"></MenuItem>
                 <Separator></Separator>
                 <MenuItem Header="Выход" Height="25"></MenuItem>
             </MenuItem>

@@ -52,21 +52,26 @@ namespace NotePadApp
 
         private void OpenMenuItemClick(object sender, RoutedEventArgs e)
         {
-            OpenFileDialog openDialog = new OpenFileDialog();
-
-            bool? result = openDialog.ShowDialog();
-
-            if (result == true)
+            try
             {
-                _saveUri = openDialog.FileName;
-            }
+                OpenFileDialog openDialog = new OpenFileDialog();
 
-            richTextBox.Document.Blocks.Clear();
+                bool? result = openDialog.ShowDialog();
 
-            using (StreamReader reader = new StreamReader(_saveUri))
-            {
-                richTextBox.Document.Blocks.Add(new Paragraph(new Run(reader.ReadToEnd())));
+                if (result == true)
+                {
+                    _saveUri = openDialog.FileName;
+                }
+
+                richTextBox.Document.Blocks.Clear();
+
+                using (StreamReader reader = new StreamReader(_saveUri))
+                {
+                    richTextBox.Document.Blocks.Add(new Paragraph(new Run(reader.ReadToEnd())));
+                }
             }
+            catch (Exception)
+            {}
         }
 
         private void SaveFile(object path)
@@ -87,9 +92,9 @@ namespace NotePadApp
                     writer.WriteLine(text);
                 }
             }
-            catch (Exception)
+            catch (Exception e)
             {
-                MessageBox.Show("Ошибка записи");
+                MessageBox.Show("Ошибка записи\n" + e.Message);
             }
         }
 
@@ -113,5 +118,14 @@ namespace NotePadApp
 
             SaveFile(_saveUri);
         }
+
+        private void PrintMenuItemClick(object sender, RoutedEventArgs e)
+        {
+            SaveFile(_saveUri);
+            new PrintDialog().ShowDialog();
+        }
+
+
+
     }
 }
