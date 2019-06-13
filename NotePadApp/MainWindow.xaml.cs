@@ -125,7 +125,9 @@ namespace NotePadApp
             new PrintDialog().ShowDialog();
         }
 
-
-
+        private void ExitMenuItemClick(object sender, RoutedEventArgs e)
+        {
+            Close();
+        }
     }
 }

@@ -22,7 +22,7 @@
                 <MenuItem Header="Параметры страницы..." Height="25"></MenuItem>
                 <MenuItem x:Name="printMenuItem" Click="PrintMenuItemClick" Header="Печать..." Height="25"></MenuItem>
                 <Separator></Separator>
-                <MenuItem Header="Выход" Height="25"></MenuItem>
+                <MenuItem x:Name="exitMenuItem" Click='ExitMenuItemClick' Header="Выход" Height="25"></MenuItem>
             </MenuItem>
 
             <MenuItem Header="Правка" Height="25">
